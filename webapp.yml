@@ -3,8 +3,8 @@
   connection : local
   vars:
     group: table5dwwebapprg
-      webapp_name: table5dwwebapp
-      location: brazilsouth
+    webapp_name: table5dwwebapp
+    location: brazilsouth
   tasks:
     - name: create rg
       azure_rm_resourcegroup:
