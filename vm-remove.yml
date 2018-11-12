@@ -1,0 +1,9 @@
+- name: Create  VM
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Create resource group
+    azure_rm_resourcegroup:
+     name: table5dwvmrg
+       state: absent
+       force: true
