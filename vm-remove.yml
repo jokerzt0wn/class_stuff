@@ -5,5 +5,5 @@
   - name: Create resource group
     azure_rm_resourcegroup:
      name: table5dwvmrg
-       state: absent
-       force: true
+     state: absent
+     force: true
