@@ -1,0 +1,13 @@
+- hosts: localhost
+  connection : local
+  vars:
+    group: table5dwwebapprg
+    webapp_name: table5dwwebapp
+    location: brazilsouth
+  tasks:
+    - name: Create Resource Group
+      azure_rm_resourcegroup:
+        name: "{{ group }}"
+        location: "{{ location }}"
+        state: absent
+        force: true
