@@ -49,5 +49,6 @@
     loop:
       - {name: 'one', tag: 'nginx'}
       - {name: 'two', tag: 'apache'}
+      - {name: 'three', tag: 'apache'}
     loop_control:
       loop_var: vm
