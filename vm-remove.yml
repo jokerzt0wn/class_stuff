@@ -4,12 +4,6 @@
   tasks:
   - name: Create resource group
     azure_rm_resourcegroup:
-<<<<<<< HEAD
       name: table5dwvmrg
       state: absent
       force: true
-=======
-     name: table5dwvmrg
-     state: absent
-     force: true
->>>>>>> cb0c166d95e6d22a92fc936c1594c1c0bceaf4a3
