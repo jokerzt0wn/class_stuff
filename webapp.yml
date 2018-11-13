@@ -5,10 +5,10 @@
     webapp_name: table5dwwebapp
     location: brazilsouth
   tasks:
-    - name: create rg
+    - name: Create Resource Group
       azure_rm_resourcegroup:
-      name: "{{ group }}"
-      location: "{{ location }}"
+        name: "{{ group }}"
+        location: "{{ location }}"
     - name: Create App Svc
       azure_rm_webapp:
         resource_group: "{{ group }}"
