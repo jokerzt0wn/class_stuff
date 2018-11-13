@@ -1,0 +1,36 @@
+- name: Create public IP address
+  azure_rm_publicipaddress:
+    resource_group: "{{ group_name }}"
+    allocation_method: Static
+    name: "{{prefix}}pubip"
+  register: output_ip_address
+- name: Output public IP
+  debug:
+    msg: "Public IP is {{ output_ip_address.state.ip_address }}."
+- name: Create virtual network inteface card
+  azure_rm_networkinterface:
+    resource_group: "{{ group_name }}"
+    name: "{{ nic_name }}{{vm.name}}"
+    virtual_network: "{{ vnet }}"
+    subnet: "{{ subnet_name }}"
+    public_ip_name: "{{ prefix }}pubip{{vm.name}}"
+    security_group: "{{ nsg_name }}"
+- name: Create VM
+  azure_rm_virtualmachine:
+    resource_group: "{{ group_name }}"
+    name: "{{prefix}}vm{{vm.name}}"
+    tags:
+      machine_role: "{{vm.tag}}"
+    vm_size: Standard_DS1_v2
+    admin_username: azureops
+    ssh_password_enabled: false
+    ssh_public_keys:
+      - path: /home/azureops/.ssh/authorized_keys
+        key_data: |
+          {{ lookup('file','/home/azureops/.ssh/id_rsa.pub') }}
+    network_interfaces: "{{ nic_name }}{{vm.name}}"
+    image:
+      offer: UbuntuServer
+      publisher: Canonical
+      sku: '16.04-LTS'
+      version: latest

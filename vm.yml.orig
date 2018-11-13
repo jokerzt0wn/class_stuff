@@ -39,9 +39,28 @@
           access: Allow
           priority: 1001
           direction: Inbound
-  - include_tasks: vm_details.yml
-    loop:
-      - {name: 'one', tag: 'nginx'}
-      - {name: 'two', tag: 'apache'}
-    loop_control:
-      loop_var: vm
+  - name: Create virtual network inteface card
+    azure_rm_networkinterface:
+      resource_group: "{{ group_name }}"
+      name: "{{ nic_name }}"
+      virtual_network: "{{ vnet }}"
+      subnet: "{{ subnet_name }}"
+      public_ip_name: table5dwPublicIP
+      security_group: "{{ nsg_name }}"
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: "{{ group_name }}"
+      name: table5dwvm
+      vm_size: Standard_DS1_v2
+      admin_username: azureops
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: /home/azureops/.ssh/authorized_keys
+          key_data: |
+            {{ lookup('file','/home/azureops/.ssh/id_rsa.pub') }}
+      network_interfaces: "{{ nic_name }}"
+      image:
+        offer: UbuntuServer
+        publisher: Canonical
+        sku: '16.04-LTS'
+        version: latest
