@@ -19,15 +19,15 @@
       name: "{{ subnet_name }}"
       address_prefix: "10.0.1.0/24"
       virtual_network: "{{ vnet }}"
-  - name: Create public IP address
-    azure_rm_publicipaddress:
-      resource_group: "{{ group_name }}"
-      allocation_method: Static
-      name: table5dwPublicIP
-    register: output_ip_address
-  - name: Output public IP 
-    debug:
-      msg: "Public IP is {{ output_ip_address.state.ip_address }}."
+#  - name: Create public IP address
+#    azure_rm_publicipaddress:
+#      resource_group: "{{ group_name }}"
+#      allocation_method: Static
+#      name: table5dwPublicIP
+#    register: output_ip_address
+#  - name: Output public IP 
+#    debug:
+#      msg: "Public IP is {{ output_ip_address.state.ip_address }}."
   - name: Create Network Security Group that allows SSH
     azure_rm_securitygroup:
       resource_group: "{{ group_name }}"
@@ -38,6 +38,12 @@
           destination_port_range: 22
           access: Allow
           priority: 1001
+          direction: Inbound
+        - name: Apache
+          protocol: Tcp
+          destination_port_range: 80
+          access: Allow
+          priority: 1002
           direction: Inbound
   - include_tasks: vm_details.yml
     loop:

@@ -2,8 +2,13 @@
   hosts: localhost
   connection: local
   tasks:
-  - name: Create resource group
-    azure_rm_resourcegroup:
-      name: table5dwvmrg
+  - name: Remove VM One
+    azure_rm_virtualmachine:
+      name: table5dwvmone
+      state: absent
+      force: true
+  - name: Remove VM Two
+    azure_rm_virtualmachine:
+      name: table5dwvmtwo
       state: absent
       force: true
