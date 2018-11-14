@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  connection: local
+  tasks:
+    - name: Arm Deploy
+      azure_rm_deployment:
+        location: brazilsouth
+        state: present
+        resource_group_name: table5dwwebapp6rg
+        template_link: https://raw.githubusercontent.com/jokerzt0wn/arm/master/template.json
+        parameters_link: https://raw.githubusercontent.com/jokerzt0wn/arm/master/parameters.json
