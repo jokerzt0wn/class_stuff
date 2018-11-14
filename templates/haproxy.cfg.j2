@@ -13,7 +13,7 @@ listen cluster
     mode http
     stats enable
     balance roundrobin
-{% for backend in groups['web'] %}
+{% for backend in groups['apache'] %}
     server {{ hostvars[backend]['ansible_hostname'] }} {{ hostvars[backend].ansible_all_ipv4_addresses.0 }} check port 80
 {% endfor %}
     option httpchk HEAD /index.php HTTP/1.0

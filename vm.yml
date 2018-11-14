@@ -52,5 +52,5 @@
       - {name: 'three', tag: 'apache'}
     loop_control:
       loop_var: vm
-  - include: apache.yml
-  - include: haproxy.yml
+- include: apache.yml
+- include: haproxy.yml

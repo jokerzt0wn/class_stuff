@@ -2,7 +2,7 @@
   azure_rm_publicipaddress:
     resource_group: "{{ group_name }}"
     allocation_method: Static
-    name: "{{prefix}}pubip"
+    name: "{{prefix}}pubip{{vm.name}}"
   register: output_ip_address
 - name: Output public IP
   debug:
