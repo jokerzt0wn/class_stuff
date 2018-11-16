@@ -1,6 +1,6 @@
 - hosts: all
   remote_user: azureops
-  sudo: True 
+  become: true
   tasks:
     - name: Installs java app
       apt:
