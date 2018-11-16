@@ -1,0 +1,42 @@
+{
+  "builders": [{
+    "type": "azure-arm",
+
+    "client_id": "0e3cf9fa-e063-4389-83e0-c80e2a85f35f",
+    "client_secret": "18d5211d-9a76-4fad-bb01-d4c51231e03c",
+    "tenant_id": "a7288f82-b9ee-4329-925d-f67e405ec2a4",
+    "subscription_id": "0ab9ad2e-f316-4da5-b243-e7f65da24755",
+
+    "managed_image_resource_group_name": "table5dwpacker",
+    "managed_image_name": "table5packerimage",
+
+    "os_type": "Linux",
+    "image_publisher": "Canonical",
+    "image_offer": "UbuntuServer",
+    "image_sku": "16.04-LTS",
+
+    "azure_tags": {
+        "dept": "Dev",
+        "task": "Image deployment"
+    },
+
+    "location": "brazilsouth",
+    "vm_size": "Standard_DS2_v2"
+  }],
+  "provisioners": [{
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "apt-get update",
+      "apt-get upgrade -y",
+      "apt-get -y install openjdk",
+
+      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+  },
+  {
+    "type": "ansible",
+    "playbook_file": "./java_app.yml"
+  }
+]}
